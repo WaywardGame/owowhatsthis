@@ -8,7 +8,7 @@ html[data-language="Engwibsh"], html[data-language="Engwibsh"] body {
 	font-family: "kendiyaz" !important;
 }
 
-[data-menu-id="Main"]::before {
+[data-language="Engwibsh"] [data-menu-id="Main"]::before {
 	background-image: url("../img/ui/logo.png");
     animation: title-zoom-2 80s ease-in-out infinite;
     height: 272px;

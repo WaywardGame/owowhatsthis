@@ -1,0 +1,36 @@
+
+@font-face {
+	src: url("../font/kendiyaz.ttf");
+	font-family: "kendiyaz";
+}
+
+html[data-language="Engwibsh"], html[data-language="Engwibsh"] body {
+	font-family: "kendiyaz" !important;
+}
+
+[data-menu-id="Main"]::before {
+	background-image: url("../img/ui/logo.png");
+    animation: title-zoom-2 80s ease-in-out infinite;
+    height: 272px;
+    width: 688px;
+    margin-bottom: -20px;
+}
+
+@keyframes title-zoom-2 {
+	0% {
+		transform: scale(1.0) rotate(6deg);
+	}
+	25% {
+		transform: scale(1.03) rotate(-2deg);
+	}
+	50% {
+		transform: scale(1.0) rotate(6deg);
+	}
+	75% {
+		transform: scale(0.97) rotate(-2deg);
+	}
+	100% {
+		transform: scale(1.0) rotate(6deg);
+	}
+}
+

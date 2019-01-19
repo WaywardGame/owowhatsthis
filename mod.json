@@ -1,0 +1,12 @@
+{
+	"name": "OwO Whats this?",
+	"description": "uwu spweek engwibsh?",
+	"author": "Yuudaari",
+	"version": "1.0.0",
+	"compatibleMinorVersions": [7],
+	"multiplayerClientside": true,
+	"file": "out/WhatsThis",
+	"stylesheets": [
+		"static/css/index"
+	]
+}

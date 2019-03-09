@@ -3,6 +3,7 @@
 	"description": "uwu spweek engwibsh?",
 	"author": "Yuudaari",
 	"version": "1.0.0",
+	"unloadable": true,
 	"compatibleMinorVersions": [
 		7
 	],

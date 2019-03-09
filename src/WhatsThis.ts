@@ -136,8 +136,10 @@ export default class WhatsThis extends Mod {
 			} else {
 				section = section.replace(regex, replacement);
 			}
-
 		}
+
+		// uncomment this 4 pain
+		// section = section.replace(/\d+/g, match => Translation.ofNumber(+match).getString());
 
 		return section;
 	}

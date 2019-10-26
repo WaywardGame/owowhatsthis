@@ -3,11 +3,13 @@ A silly language mod, which uses scripts in order to morph the English language 
 
 Due to the way it works, it functions with every other mod which provides English automatically.
 
-## Cloning:
+## Cloning/Setup:
 ```
 git clone https://github.com/WaywardGame/owowhatsthis.git
 cd owowhatsthis
-git submodule update --init
+On Windows: path/to/wayward/install/wayward.cmd +mod update .
+On macOS: path/to/wayward/install/Wayward.app/Contents/MacOS/Electron +mod update .
+On Linux: path/to/wayward/install/wayward +mod update .
 ```
 
 ## Building:

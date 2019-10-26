@@ -4,11 +4,10 @@
 	"author": "Yuudaari",
 	"version": "1.0.0",
 	"unloadable": true,
-	"compatibleMinorVersions": [
-		7
-	],
-	"multiplayerClientside": true,
+	"waywardVersion": "2.8.0-beta",
+	"multiplayer": "clientside",
 	"file": "out/WhatsThis",
+	"allowUnlockingMilestones": true,
 	"stylesheets": [
 		"static/css/index"
 	],

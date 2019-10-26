@@ -1,10 +1,11 @@
+import { EventBus } from "event/EventBuses";
+import { EventHandler } from "event/EventManager";
 import ENGLISH from "language/English";
 import Language from "language/Language";
-import { HookMethod } from "mod/IHookHost";
+import LanguageManager from "language/LanguageManager";
 import Mod from "mod/Mod";
 import Register from "mod/ModRegistry";
-import { tuple } from "utilities/iterable/Generators";
-import { Bound } from "utilities/Objects";
+import { Tuple } from "utilities/Arrays";
 import { generalRandom } from "utilities/Random";
 import { IStringSection } from "utilities/string/Interpolator";
 
@@ -30,69 +31,69 @@ const kawaiiFaces = [
 
 const sectionReplacements: [RegExp, string[], boolean?][] = [
 	// words
-	tuple(/\bthe\b/g, ["twa", "tba", "da"]),
-	tuple(/\byes\b/g, ["mmhmb"]),
-	tuple(/\byou\b/g, ["uwu", "uwu", "uwu", "u"]),
-	tuple(/\byour\b/g, ["uwus", "uwus", "uwus", "ur"]),
-	tuple(/\band\b/g, ["awnd", "awd"]),
-	tuple(/\bof\b/g, ["ob", "obf", "owf", "owbf"]),
-	tuple(/\bbut\b/g, ["bwt", "bwut"]),
-	tuple(/\bin\b/g, ["ibn", "ib", "iwn", "iwn", "iwn", "iwbn"]),
-	tuple(/\bas\b/g, ["az", "abs", "aws"]),
-	tuple(/\bto\b/g, ["two", "twu", "twu", "tu", "tbu"]),
+	Tuple(/\bthe\b/g, ["twa", "tba", "da"]),
+	Tuple(/\byes\b/g, ["mmhmb"]),
+	Tuple(/\byou\b/g, ["uwu", "uwu", "uwu", "u"]),
+	Tuple(/\byour\b/g, ["uwus", "uwus", "uwus", "ur"]),
+	Tuple(/\band\b/g, ["awnd", "awd"]),
+	Tuple(/\bof\b/g, ["ob", "obf", "owf", "owbf"]),
+	Tuple(/\bbut\b/g, ["bwt", "bwut"]),
+	Tuple(/\bin\b/g, ["ibn", "ib", "iwn", "iwn", "iwn", "iwbn"]),
+	Tuple(/\bas\b/g, ["az", "abs", "aws"]),
+	Tuple(/\bto\b/g, ["two", "twu", "twu", "tu", "tbu"]),
 	// parts
-	tuple(/on\b/g, ["ob", "own", "own", "own", "own", "owbn"]),
-	tuple(/ws/g, ["wbs", "ws", "ws"]),
-	tuple(/ell/g, ["eww"]),
-	tuple(/ll/g, ["l", "bl"]),
-	tuple(/off/g, ["awf", "owf", "owf", "owff"]),
-	tuple(/ng(s?)\b/g, ["nb$1", "nb$1", "nb$1", "inb$1"]),
-	tuple(/\bc(?=\w)[^h]/g, ["cw"]),
-	// tuple(/(\w)f(\w)/g, ["$1b$2"]),
-	tuple(/(\w)v/g, ["$1bv"]),
-	tuple(/\bv/g, ["b"]),
-	tuple(/\bmy/g, ["mwie"]),
-	tuple(/ight/g, ["ibte"]),
-	tuple(/igh/g, ["i"]),
-	tuple(/lt/g, ["wld", "wld", "wld", "wlbd"]),
-	tuple(/ine/g, ["iwne"]),
-	tuple(/lf/g, ["lbf"]),
-	tuple(/(e[ae])(d)/g, ["$1bd"]),
-	tuple(/e[ae]/g, ["ee", "ii", "ie"]),
-	tuple(/\bh([aeiouy])/g, ["hw$1"]),
-	tuple(/uce/g, ["ubs"]),
-	tuple(/(\w)one\b/g, ["$1own"]),
-	tuple(/([pbcst])l/g, ["$1w"]),
-	tuple(/od/g, ["owd"]),
-	tuple(/\bl|r/g, ["w"]),
-	tuple(/wh/g, ["w", "wb"]),
-	tuple(/ch/g, ["cw"]),
-	tuple(/([aeiou]|\b)l([aeiouy])/g, ["$1l$2"]),
-	tuple(/sh(\w)/g, ["sw$1"]),
-	tuple(/(\w)sh/g, ["$1bsh"]),
-	tuple(/(\w)o/g, ["$1owo", "$1o", "$1o", "$1o"]),
-	tuple(/ng(\w)/g, ["ngb$1"]),
-	tuple(/(\w)me\b/g, ["$1mbe"]),
-	tuple(/qu/g, ["kw"]),
-	tuple(/([uo])t/g, ["$1bt"]),
-	tuple(/isc/g, ["ibsk"]),
-	tuple(/ck/g, ["k"]),
-	tuple(/us/g, ["uws"]),
-	tuple(/([aeiouy])st/g, ["$1wst"]),
-	tuple(/tt/g, ["t", "t", "t", "d"]),
-	tuple(/\bth/g, ["d"]),
-	tuple(/th/g, ["tw", "dt"]),
-	tuple(/(\w)tio(\w)/g, ["$1two$2"]),
-	tuple(/(\w)m([aeiou])/g, ["$1mb$2"]),
-	tuple(/no/g, ["noo"]),
-	tuple(/rs/g, ["s"]),
-	tuple(/ant/g, ["abnt"]),
-	tuple(/any/g, ["awny"]),
-	tuple(/!( |$)/g, [" ! ", "! ", " !! ", "! ! ", "! ", "!!!! ", " !! ! "], true),
-	tuple(/\?( |$)/g, ["?? ", "??? ", " ?? ? ", "??? ?! ", " ?! ", "!? ", " ??!! ", "!?? ! ", "!?? ", "!???!?!!?? ", " !!? !? "], true),
-	tuple(/,/g, [",,", ",", "...,,"]),
-	tuple(/(\w)\.( |$)/g, ["$1, ", "$1,, ", "$1... ", "$1. ", "$1. . ", "$1,. ", "$1! ", "$1! ! "], true),
-	tuple(/\.\.\.( |$)/g, [",,.. ", "... ", "...... ", ". .... ", ",...... "]),
+	Tuple(/on\b/g, ["ob", "own", "own", "own", "own", "owbn"]),
+	Tuple(/ws/g, ["wbs", "ws", "ws"]),
+	Tuple(/ell/g, ["eww"]),
+	Tuple(/ll/g, ["l", "bl"]),
+	Tuple(/off/g, ["awf", "owf", "owf", "owff"]),
+	Tuple(/ng(s?)\b/g, ["nb$1", "nb$1", "nb$1", "inb$1"]),
+	Tuple(/\bc(?=\w)[^h]/g, ["cw"]),
+	// Tuple(/(\w)f(\w)/g, ["$1b$2"]),
+	Tuple(/(\w)v/g, ["$1bv"]),
+	Tuple(/\bv/g, ["b"]),
+	Tuple(/\bmy/g, ["mwie"]),
+	Tuple(/ight/g, ["ibte"]),
+	Tuple(/igh/g, ["i"]),
+	Tuple(/lt/g, ["wld", "wld", "wld", "wlbd"]),
+	Tuple(/ine/g, ["iwne"]),
+	Tuple(/lf/g, ["lbf"]),
+	Tuple(/(e[ae])(d)/g, ["$1bd"]),
+	Tuple(/e[ae]/g, ["ee", "ii", "ie"]),
+	Tuple(/\bh([aeiouy])/g, ["hw$1"]),
+	Tuple(/uce/g, ["ubs"]),
+	Tuple(/(\w)one\b/g, ["$1own"]),
+	Tuple(/([pbcst])l/g, ["$1w"]),
+	Tuple(/od/g, ["owd"]),
+	Tuple(/\bl|r/g, ["w"]),
+	Tuple(/wh/g, ["w", "wb"]),
+	Tuple(/ch/g, ["cw"]),
+	Tuple(/([aeiou]|\b)l([aeiouy])/g, ["$1l$2"]),
+	Tuple(/sh(\w)/g, ["sw$1"]),
+	Tuple(/(\w)sh/g, ["$1bsh"]),
+	Tuple(/(\w)o/g, ["$1owo", "$1o", "$1o", "$1o"]),
+	Tuple(/ng(\w)/g, ["ngb$1"]),
+	Tuple(/(\w)me\b/g, ["$1mbe"]),
+	Tuple(/qu/g, ["kw"]),
+	Tuple(/([uo])t/g, ["$1bt"]),
+	Tuple(/isc/g, ["ibsk"]),
+	Tuple(/ck/g, ["k"]),
+	Tuple(/us/g, ["uws"]),
+	Tuple(/([aeiouy])st/g, ["$1wst"]),
+	Tuple(/tt/g, ["t", "t", "t", "d"]),
+	Tuple(/\bth/g, ["d"]),
+	Tuple(/th/g, ["tw", "dt"]),
+	Tuple(/(\w)tio(\w)/g, ["$1two$2"]),
+	Tuple(/(\w)m([aeiou])/g, ["$1mb$2"]),
+	Tuple(/no/g, ["noo"]),
+	Tuple(/rs/g, ["s"]),
+	Tuple(/ant/g, ["abnt"]),
+	Tuple(/any/g, ["awny"]),
+	Tuple(/!( |$)/g, [" ! ", "! ", " !! ", "! ! ", "! ", "!!!! ", " !! ! "], true),
+	Tuple(/\?( |$)/g, ["?? ", "??? ", " ?? ? ", "??? ?! ", " ?! ", "!? ", " ??!! ", "!?? ! ", "!?? ", "!???!?!!?? ", " !!? !? "], true),
+	Tuple(/,/g, [",,", ",", "...,,"]),
+	Tuple(/(\w)\.( |$)/g, ["$1, ", "$1,, ", "$1... ", "$1. ", "$1. . ", "$1,. ", "$1! ", "$1! ! "], true),
+	Tuple(/\.\.\.( |$)/g, [",,.. ", "... ", "...... ", ". .... ", ",...... "]),
 ];
 
 class Engwibsh extends Language {
@@ -100,7 +101,7 @@ class Engwibsh extends Language {
 		super("Engwibsh", true);
 	}
 
-	public getTranslation(dictionaryName: string, entry: string) {
+	@Override public getTranslation(dictionaryName: string, entry: string) {
 		return ENGLISH.getTranslation(dictionaryName, entry);
 	}
 }
@@ -110,8 +111,8 @@ export default class WhatsThis extends Mod {
 	@Register.language(new Engwibsh())
 	public readonly engwibsh: Engwibsh;
 
-	@HookMethod
-	public onGetTranslation(translation: IStringSection[]) {
+	@EventHandler(EventBus.Language, "postGetTranslation")
+	public onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[] {
 		if (languageManager.language !== this.engwibsh.language) {
 			return translation;
 		}

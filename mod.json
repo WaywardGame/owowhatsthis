@@ -4,7 +4,7 @@
 	"author": "Yuudaari",
 	"version": "1.0.0",
 	"unloadable": true,
-	"waywardVersion": "2.8.0-beta",
+	"waywardVersion": "2.9.0-beta",
 	"multiplayer": "clientside",
 	"file": "out/WhatsThis",
 	"allowUnlockingMilestones": true,

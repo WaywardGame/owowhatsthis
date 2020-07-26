@@ -8,6 +8,7 @@ declare class Engwibsh extends Language {
 }
 export default class WhatsThis extends Mod {
     readonly engwibsh: Engwibsh;
+    onInitialize(): void;
     onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[];
     private owoifySection;
 }

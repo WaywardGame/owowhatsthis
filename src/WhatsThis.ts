@@ -111,6 +111,10 @@ export default class WhatsThis extends Mod {
 	@Register.language(new Engwibsh())
 	public readonly engwibsh: Engwibsh;
 
+	@Override public onInitialize() {
+		this.registerEventHandlers("uninitialize");
+	}
+
 	@EventHandler(EventBus.Language, "postGetTranslation")
 	public onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[] {
 		if (languageManager.language !== this.engwibsh.language) {

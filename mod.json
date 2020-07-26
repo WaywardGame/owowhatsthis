@@ -2,7 +2,7 @@
 	"name": "OwO Whats this?",
 	"description": "uwu spweek engwibsh?",
 	"author": "Yuudaari",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"unloadable": true,
 	"waywardVersion": "2.9.0-beta",
 	"multiplayer": "clientside",

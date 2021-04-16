@@ -11,9 +11,6 @@ html[data-language="Engwibsh"], html[data-language="Engwibsh"] body {
 [data-language="Engwibsh"] [data-menu-id="Main"]::before {
 	background-image: url("../img/ui/logo.png");
     animation: title-zoom-2 80s ease-in-out infinite;
-    height: 272px;
-    width: 688px;
-    margin-bottom: -20px;
 }
 
 @keyframes title-zoom-2 {

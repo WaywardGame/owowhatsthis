@@ -4,7 +4,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-define(["require", "exports", "event/EventBuses", "event/EventManager", "language/English", "language/Language", "mod/Mod", "mod/ModRegistry", "utilities/Arrays", "utilities/Random"], function (require, exports, EventBuses_1, EventManager_1, English_1, Language_1, Mod_1, ModRegistry_1, Arrays_1, Random_1) {
+define(["require", "exports", "event/EventBuses", "event/EventManager", "language/English", "language/Language", "mod/Mod", "mod/ModRegistry", "utilities/collection/Arrays", "utilities/random/Random"], function (require, exports, EventBuses_1, EventManager_1, English_1, Language_1, Mod_1, ModRegistry_1, Arrays_1, Random_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     const kawaiiFaces = [

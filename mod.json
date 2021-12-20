@@ -5,7 +5,7 @@
 	"github": "https://github.com/WaywardGame/owowhatsthis",
 	"version": "1.0.1",
 	"unloadable": true,
-	"waywardVersion": "2.10.0-beta",
+	"waywardVersion": "2.11.0-beta",
 	"multiplayer": "clientside",
 	"file": "out/WhatsThis",
 	"allowUnlockingMilestones": true,

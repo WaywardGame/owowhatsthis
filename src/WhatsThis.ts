@@ -8,6 +8,7 @@ import Register from "mod/ModRegistry";
 import { Tuple } from "utilities/collection/Arrays";
 import { generalRandom } from "utilities/random/Random";
 import { IStringSection } from "utilities/string/Interpolator";
+import { Bound } from "utilities/Decorators";
 
 const kawaiiFaces = [
 	"(o´ω｀o)",
@@ -101,7 +102,7 @@ class Engwibsh extends Language {
 		super("Engwibsh", true);
 	}
 
-	@Override public getTranslation(dictionaryName: string, entry: string) {
+	public override getTranslation(dictionaryName: string, entry: string) {
 		return ENGLISH.getTranslation(dictionaryName, entry);
 	}
 }
@@ -111,7 +112,7 @@ export default class WhatsThis extends Mod {
 	@Register.language(new Engwibsh())
 	public readonly engwibsh: Engwibsh;
 
-	@Override public onInitialize() {
+	public override onInitialize() {
 		this.registerEventHandlers("uninitialize");
 	}
 

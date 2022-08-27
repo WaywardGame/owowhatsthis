@@ -4,8 +4,9 @@
 	font-family: "kendiyaz";
 }
 
-html[data-language="Engwibsh"], html[data-language="Engwibsh"] body {
-	font-family: "kendiyaz" !important;
+:root[data-language="Engwibsh"] {
+	--font: "kendiyaz";
+	--font-basic: "kendiyaz";
 }
 
 [data-language="Engwibsh"] [data-menu-id="Main"]::before {

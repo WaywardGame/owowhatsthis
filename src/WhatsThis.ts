@@ -6,7 +6,7 @@ import LanguageManager from "language/LanguageManager";
 import Mod from "mod/Mod";
 import Register from "mod/ModRegistry";
 import { Tuple } from "utilities/collection/Arrays";
-import { generalRandom } from "utilities/random/Random";
+import { generalRandom } from "utilities/random/RandomUtilities";
 import { IStringSection } from "utilities/string/Interpolator";
 import { Bound } from "utilities/Decorators";
 

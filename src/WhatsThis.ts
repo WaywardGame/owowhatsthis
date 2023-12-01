@@ -9,17 +9,17 @@
  * https://github.com/WaywardGame/types/wiki
  */
 
-import { EventBus } from "event/EventBuses";
-import { EventHandler } from "event/EventManager";
-import ENGLISH from "language/English";
-import Language from "language/Language";
-import LanguageManager from "language/LanguageManager";
-import Mod from "mod/Mod";
-import Register from "mod/ModRegistry";
-import { Tuple } from "utilities/collection/Tuple";
-import { generalRandom } from "utilities/random/RandomUtilities";
-import { IStringSection } from "utilities/string/Interpolator";
-import { Bound } from "utilities/Decorators";
+import { EventBus } from "@wayward/game/event/EventBuses";
+import { EventHandler } from "@wayward/game/event/EventManager";
+import ENGLISH from "@wayward/game/language/English";
+import Language from "@wayward/game/language/Language";
+import LanguageManager from "@wayward/game/language/LanguageManager";
+import Mod from "@wayward/game/mod/Mod";
+import Register from "@wayward/game/mod/ModRegistry";
+import { Tuple } from "@wayward/utilities/collection/Tuple";
+import { generalRandom } from "@wayward/utilities/random/RandomUtilities";
+import { IStringSection } from "@wayward/game/utilities/string/Interpolator";
+import { Bound } from "@wayward/utilities/Decorators";
 
 const kawaiiFaces = [
 	"(o´ω｀o)",
@@ -113,7 +113,7 @@ class Engwibsh extends Language {
 		super("Engwibsh", true);
 	}
 
-	public override getTranslation(dictionaryName: string, entry: string) {
+	public override getTranslation(dictionaryName: string, entry: string): string[] | undefined {
 		return ENGLISH.getTranslation(dictionaryName, entry);
 	}
 }
@@ -123,13 +123,13 @@ export default class WhatsThis extends Mod {
 	@Register.language(new Engwibsh())
 	public readonly engwibsh: Engwibsh;
 
-	public override onInitialize() {
+	public override onInitialize(): void {
 		this.registerEventHandlers("uninitialize");
 	}
 
 	@EventHandler(EventBus.Language, "postGetTranslation")
 	public onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[] {
-		if (languageManager.language !== this.engwibsh.language) {
+		if (lm.language !== this.engwibsh.language) {
 			return translation;
 		}
 
@@ -141,7 +141,7 @@ export default class WhatsThis extends Mod {
 	}
 
 	@Bound
-	private owoifySection(section: string) {
+	private owoifySection(section: string): string {
 		section = section.toLowerCase();
 
 		for (const [regex, replacements, includeFace] of sectionReplacements) {

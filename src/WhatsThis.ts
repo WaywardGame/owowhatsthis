@@ -1,5 +1,5 @@
 /*!
- * Copyright 2011-2023 Unlok
+ * Copyright 2011-2024 Unlok
  * https://www.unlok.ca
  *
  * Credits & Thanks:
@@ -16,10 +16,10 @@ import Language from "@wayward/game/language/Language";
 import LanguageManager from "@wayward/game/language/LanguageManager";
 import Mod from "@wayward/game/mod/Mod";
 import Register from "@wayward/game/mod/ModRegistry";
-import { Tuple } from "@wayward/utilities/collection/Tuple";
-import { generalRandom } from "@wayward/utilities/random/RandomUtilities";
 import { IStringSection } from "@wayward/game/utilities/string/Interpolator";
+import { Tuple } from "@wayward/utilities/collection/Tuple";
 import { Bound } from "@wayward/utilities/Decorators";
+import { generalRandom } from "@wayward/utilities/random/RandomUtilities";
 
 const kawaiiFaces = [
 	"(o´ω｀o)",
@@ -118,6 +118,10 @@ class Engwibsh extends Language {
 	}
 }
 
+interface IOwoifiedSection extends IStringSection {
+	owoified?: true;
+}
+
 export default class WhatsThis extends Mod {
 
 	@Register.language(new Engwibsh())
@@ -128,14 +132,20 @@ export default class WhatsThis extends Mod {
 	}
 
 	@EventHandler(EventBus.Language, "postGetTranslation")
-	public onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[] {
+	public onGetTranslation(lm: LanguageManager, translation: IOwoifiedSection[]): IOwoifiedSection[] {
 		if (lm.language !== this.engwibsh.language) {
 			return translation;
 		}
 
-		return translation.map(section => ({
+		return this.owoifySections(translation);
+	}
+
+	private owoifySections(sections: IOwoifiedSection[]): IOwoifiedSection[] {
+		return sections.map(section => ({
 			...section,
-			content: (section as any).owoified ? section.content : this.owoifySection(section.content),
+			content: section.owoified ? section.content
+				: Array.isArray(section.content) ? this.owoifySections(section.content)
+					: this.owoifySection(section.content),
 			owoified: true,
 		}));
 	}

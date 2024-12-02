@@ -2,10 +2,10 @@ import { EventBus } from "@wayward/game/event/EventBuses";
 import { EventHandler } from "@wayward/game/event/EventManager";
 import ENGLISH from "@wayward/game/language/English";
 import Language from "@wayward/game/language/Language";
-import LanguageManager from "@wayward/game/language/LanguageManager";
+import type LanguageManager from "@wayward/game/language/LanguageManager";
 import Mod from "@wayward/game/mod/Mod";
 import Register from "@wayward/game/mod/ModRegistry";
-import { IStringSection } from "@wayward/game/utilities/string/Interpolator";
+import type { IStringSection } from "@wayward/game/utilities/string/Interpolator";
 import { Tuple } from "@wayward/utilities/collection/Tuple";
 import { Bound } from "@wayward/utilities/Decorators";
 import { generalRandom } from "@wayward/utilities/random/RandomUtilities";
@@ -30,7 +30,7 @@ const kawaiiFaces = [
 	"(n˘v˘•)¬",
 ];
 
-const sectionReplacements: [RegExp, string[], boolean?][] = [
+const sectionReplacements: Array<[RegExp, string[], boolean?]> = [
 	// words
 	Tuple(/\bthe\b/g, ["twa", "tba", "da"]),
 	Tuple(/\byes\b/g, ["mmhmb"]),

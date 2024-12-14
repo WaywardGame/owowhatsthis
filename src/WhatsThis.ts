@@ -1,25 +1,14 @@
-/*!
- * Copyright 2011-2023 Unlok
- * https://www.unlok.ca
- *
- * Credits & Thanks:
- * https://www.unlok.ca/credits-thanks/
- *
- * Wayward is a copyrighted and licensed work. Modification and/or distribution of any source files is prohibited. If you wish to modify the game in any way, please refer to the modding guide:
- * https://github.com/WaywardGame/types/wiki
- */
-
-import { EventBus } from "event/EventBuses";
-import { EventHandler } from "event/EventManager";
-import ENGLISH from "language/English";
-import Language from "language/Language";
-import LanguageManager from "language/LanguageManager";
-import Mod from "mod/Mod";
-import Register from "mod/ModRegistry";
-import { Tuple } from "utilities/collection/Tuple";
-import { generalRandom } from "utilities/random/RandomUtilities";
-import { IStringSection } from "utilities/string/Interpolator";
-import { Bound } from "utilities/Decorators";
+import { EventBus } from "@wayward/game/event/EventBuses";
+import { EventHandler } from "@wayward/game/event/EventManager";
+import ENGLISH from "@wayward/game/language/English";
+import Language from "@wayward/game/language/Language";
+import type LanguageManager from "@wayward/game/language/LanguageManager";
+import Mod from "@wayward/game/mod/Mod";
+import Register from "@wayward/game/mod/ModRegistry";
+import type { IStringSection } from "@wayward/game/utilities/string/Interpolator";
+import { Tuple } from "@wayward/utilities/collection/Tuple";
+import { Bound } from "@wayward/utilities/Decorators";
+import { generalRandom } from "@wayward/utilities/random/RandomUtilities";
 
 const kawaiiFaces = [
 	"(o´ω｀o)",
@@ -41,7 +30,7 @@ const kawaiiFaces = [
 	"(n˘v˘•)¬",
 ];
 
-const sectionReplacements: [RegExp, string[], boolean?][] = [
+const sectionReplacements: Array<[RegExp, string[], boolean?]> = [
 	// words
 	Tuple(/\bthe\b/g, ["twa", "tba", "da"]),
 	Tuple(/\byes\b/g, ["mmhmb"]),
@@ -113,9 +102,13 @@ class Engwibsh extends Language {
 		super("Engwibsh", true);
 	}
 
-	public override getTranslation(dictionaryName: string, entry: string) {
+	public override getTranslation(dictionaryName: string, entry: string): string[] | undefined {
 		return ENGLISH.getTranslation(dictionaryName, entry);
 	}
+}
+
+interface IOwoifiedSection extends IStringSection {
+	owoified?: true;
 }
 
 export default class WhatsThis extends Mod {
@@ -123,25 +116,31 @@ export default class WhatsThis extends Mod {
 	@Register.language(new Engwibsh())
 	public readonly engwibsh: Engwibsh;
 
-	public override onInitialize() {
+	public override onInitialize(): void {
 		this.registerEventHandlers("uninitialize");
 	}
 
 	@EventHandler(EventBus.Language, "postGetTranslation")
-	public onGetTranslation(lm: LanguageManager, translation: IStringSection[]): IStringSection[] {
-		if (languageManager.language !== this.engwibsh.language) {
+	public onGetTranslation(lm: LanguageManager, translation: IOwoifiedSection[]): IOwoifiedSection[] {
+		if (lm.language !== this.engwibsh.language) {
 			return translation;
 		}
 
-		return translation.map(section => ({
+		return this.owoifySections(translation);
+	}
+
+	private owoifySections(sections: IOwoifiedSection[]): IOwoifiedSection[] {
+		return sections.map(section => ({
 			...section,
-			content: (section as any).owoified ? section.content : this.owoifySection(section.content),
+			content: section.owoified ? section.content
+				: Array.isArray(section.content) ? this.owoifySections(section.content)
+					: this.owoifySection(section.content),
 			owoified: true,
 		}));
 	}
 
 	@Bound
-	private owoifySection(section: string) {
+	private owoifySection(section: string): string {
 		section = section.toLowerCase();
 
 		for (const [regex, replacements, includeFace] of sectionReplacements) {
